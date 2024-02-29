@@ -1,8 +1,11 @@
-const { register, login } = require('../controllers/authController');
+const { getAllUsers, getUserById, updateUser } = require('../controllers/userController');
+const isLoggedIn = require('../middleware/isLoggedIn');
+
 
 const userRouter = require('express').Router();
 
-userRouter.post('/register', register);
-userRouter.post('/login', login);
+userRouter.get('/allusers', isLoggedIn, getAllUsers);
+userRouter.get('/getuserbyid/:id', isLoggedIn, getUserById);
+userRouter.put('/updateuser/:id', isLoggedIn, updateUser)
 
 module.exports = userRouter;

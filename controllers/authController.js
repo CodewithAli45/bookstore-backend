@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
+const generateToken = require('../utils/generateToken');
 
 const register = async (req, res) => {
     const {fullName, email, password} = req.body;
@@ -49,8 +50,10 @@ const login = async (req, res) => {
                 message: "Password is Incorrect, Please try again"
             })
         }
+        const token = await generateToken(existingUser.id);
         res.status(201).json({
             message: "User Logged In Successfully",
+            token: token,
             data: existingUser
         })
     } catch (error) {
